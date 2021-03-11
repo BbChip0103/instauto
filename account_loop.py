@@ -130,7 +130,7 @@ if __name__ == '__main__':
             # options.add_argument(f'user-agent={userAgent}') 
 
             options = webdriver.ChromeOptions()
-            options.add_argument('--user-agent="Mozilla/5.0 (Windows Phone 10.0; Android 4.2.1; Microsoft; Lumia 640 XL LTE) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Mobile Safari/537.36 Edge/12.10166"')
+            options.add_argument('--user-agent="Mozilla/5.0 (Linux; Android 9; SM-A102U Build/PPR1.180610.011; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/74.0.3729.136 Mobile Safari/537.36 Instagram 155.0.0.37.107 Android (28/9; 320dpi; 720x1468; samsung; SM-A102U; a10e; exynos7885; en_US; 239490550)"')
 
             browser = webdriver.Chrome("chromedriver_win32/chromedriver.exe", options=options)
             
@@ -154,6 +154,6 @@ if __name__ == '__main__':
             browser.quit()
             print(e)
         finally:
-            browser.quit()
+            # browser.quit()
             print()
             time.sleep(1)

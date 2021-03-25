@@ -10,6 +10,8 @@ from fake_useragent import UserAgent
 # import accountInfoGenerator as account
 # import getVerifCode as verifiCode
 # import fakeMail as email
+import requests
+from bs4 import BeautifulSoup
 import random
 import json
 
@@ -92,6 +94,14 @@ if __name__ == '__main__':
     id_i = 0
     username = id_list[id_i][0]
 
+    ### Get recent user-agent for instagram
+    res = requests.get('https://developers.whatismybrowser.com/useragents/explore/software_name/instagram/')
+    soup = BeautifulSoup(res.text, features='html.parser')
+    useragent_table = soup.find(class_='table-useragents').tbody
+    useragent_text = useragent_table.find('a').get_text()
+    if useragent_text is None:
+        useragent_text = 'Mozilla/5.0 (Linux; Android 9; SM-A102U Build/PPR1.180610.011; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/74.0.3729.136 Mobile Safari/537.36 Instagram 155.0.0.37.107 Android (28/9; 320dpi; 720x1468; samsung; SM-A102U; a10e; exynos7885; en_US; 239490550)'
+
     ### is working done loop
     is_end = False
     while True:
@@ -161,7 +171,7 @@ if __name__ == '__main__':
             # options.add_argument(f'user-agent={userAgent}') 
 
             options = webdriver.ChromeOptions()
-            options.add_argument('--user-agent="Mozilla/5.0 (Linux; Android 9; SM-A102U Build/PPR1.180610.011; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/74.0.3729.136 Mobile Safari/537.36 Instagram 155.0.0.37.107 Android (28/9; 320dpi; 720x1468; samsung; SM-A102U; a10e; exynos7885; en_US; 239490550)"')
+            options.add_argument('--user-agent="{}"'.format(useragent_text))
 
             browser = webdriver.Chrome("chromedriver_win32/chromedriver.exe", options=options)
 

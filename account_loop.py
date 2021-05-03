@@ -19,12 +19,21 @@ def login_loop(browser, username, passwd):
     browser.get("https://www.instagram.com/")
     time.sleep(1)
 
-    #Fill the email value
-    WebDriverWait(browser, 30).until(
+    ### Fill the email value
+    login_object = WebDriverWait(browser, 30).until(
         EC.element_to_be_clickable(
             (By.XPATH, "//*[@id='react-root']/section/main/article/div/div/div/div[2]/button")
         )
-    ).click()
+    )
+    childs = login_object.find_elements_by_css_selector("div > div")
+    for each_obj in childs:
+        if '다운로드' in each_obj.text:
+            login_object = WebDriverWait(browser, 30).until(
+                EC.element_to_be_clickable(
+                    (By.XPATH, "//*[@id='react-root']/section/main/article/div/div/div/div[3]/button[1]")
+                )
+            )
+    login_object.click()
 
     ### Login page
     WebDriverWait(browser, 30).until(
@@ -54,11 +63,11 @@ def login_loop(browser, username, passwd):
 
     ### Pass save account
     for i in range(30):
+        time.sleep(1)
         try:
             browser.find_element_by_xpath(    
                 "//*[@id='react-root']/section/main/div/div/div/button"
             ).click()
-            time.sleep(1)
         except:
             pass
         try:

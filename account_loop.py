@@ -15,24 +15,32 @@ from bs4 import BeautifulSoup
 import random
 import json
 
+
 def login_loop(browser, username, passwd):
     browser.get("https://www.instagram.com/")
     time.sleep(1)
 
     ### Fill the email value
+    # login_object = WebDriverWait(browser, 30).until(
+    #     EC.element_to_be_clickable(
+    #         (By.XPATH, "//*[@id='react-root']/section/main/article/div/div/div/div[2]/button")
+    #     )
+    # )
+    # childs = login_object.find_elements_by_css_selector("div > div")
+    # //*[@id="react-root"]/section/main/article/div/div/div
+    # for each_obj in childs:
+    #     if '다운로드' in each_obj.text:
+    #         login_object = WebDriverWait(browser, 30).until(
+    #             EC.element_to_be_clickable(
+    #                 (By.XPATH, "//*[@id='react-root']/section/main/article/div/div/div/div[3]/button[1]")
+    #             )
+    #         )
+    #         break
     login_object = WebDriverWait(browser, 30).until(
         EC.element_to_be_clickable(
-            (By.XPATH, "//*[@id='react-root']/section/main/article/div/div/div/div[2]/button")
+            (By.XPATH, "//*[@id='react-root']/section/main/article/div/div/div/div[3]/button[1]")
         )
-    )
-    childs = login_object.find_elements_by_css_selector("div > div")
-    for each_obj in childs:
-        if '다운로드' in each_obj.text:
-            login_object = WebDriverWait(browser, 30).until(
-                EC.element_to_be_clickable(
-                    (By.XPATH, "//*[@id='react-root']/section/main/article/div/div/div/div[3]/button[1]")
-                )
-            )
+    )    
     login_object.click()
 
     ### Login page
@@ -77,6 +85,12 @@ def login_loop(browser, username, passwd):
         except:
             pass
         try:
+            browser.find_element_by_xpath(    
+                "/html/body/div[5]/div/div/div/div[3]/button[2]"
+            ).click()
+        except:
+            pass            
+        try:
             WebDriverWait(browser, 0.5).until(
                 EC.element_to_be_clickable(
                     (By.XPATH, "//*[@id='react-root']/section/nav[2]/div/div/div[2]/div/div/div[5]/a")
@@ -92,7 +106,7 @@ def login_loop(browser, username, passwd):
 
 
 if __name__ == '__main__':
-    result_jsonname = 'private/id_list.json'
+    result_jsonname = 'private/account_list.json'
     with open(result_jsonname, 'r') as f:
         text = f.read()
     id_list = json.loads(text)
